@@ -18,7 +18,7 @@ print('versão: {}'.format(VERSAO))
 
 acao = TipoAcao.lancamento
 tipo = TipoResidencia.apartamento_padrao
-onde = None
+onde = 'sp+sao-paulo' # estado + cidade
 qnt_quartos = None
 qnt_suites = None
 qnt_vagas = None
@@ -28,7 +28,7 @@ area_util_maxima = None
 # pagina de inicio da procura...
 pagina_inicial = 1
 # se tiver -1, ele vai pesquisar todas as paginas com os parâmetros passados...
-pagina_final = -1
+pagina_final = 5 # vamos pegar 5 páginas
 
 # criamos a instancia de coleta
 gerenciar = GerenciarColeta(acao=acao, tipo=tipo,onde=onde,qnt_quartos=qnt_quartos,qnt_suites=qnt_suites,qnt_vagas=qnt_vagas,area_util_minima=area_util_minima,area_util_maxima=area_util_maxima)
