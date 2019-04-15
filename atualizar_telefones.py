@@ -142,9 +142,15 @@ l = db.pegar_total()
 
 printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 for i, item in enumerate(data):
-	tmp = pegar_numero(item['id'],item['transacao'])
+	# pegamos o id...
+	dados = db.pegar_dados(item['id'])
+	#checamos se existe já algum telefone para esse id, então pulamos para o próximo id.
+	if len(dados['dados_contato']['telefone']) > 0:
+		continue
 	if i > 5:
 		break
+	tmp = pegar_numero(item['id'],item['transacao'])
+
 	telefones = []
 	if tmp:					
 		if 'Telefones' in tmp and tmp['CaptchaId'] == None:														
