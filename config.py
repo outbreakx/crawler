@@ -1,4 +1,4 @@
 IP = "mongodb://localhost:27017/"
 DATABASE = "test"
 TABELA = 'anuncios'
-VERSAO = 1.5
+VERSAO = 1.6

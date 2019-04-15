@@ -147,8 +147,7 @@ for i, item in enumerate(data):
 	#checamos se existe já algum telefone para esse id, então pulamos para o próximo id.
 	if len(dados['dados_contato']['telefone']) > 0:
 		continue
-	if i > 5:
-		break
+		
 	tmp = pegar_numero(item['id'],item['transacao'])
 
 	telefones = []
