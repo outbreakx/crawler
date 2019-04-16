@@ -124,7 +124,7 @@ class ColetarSite():
 				obj = self.pegar_dados(self.data)
 				#print('pego obj...')
 			except:
-				print('deu erro: {}'.format(obj) )
+				print('deu erro: {} tentativa: {}'.format(obj,contador) )
 				pass
 			contador += 1
 		if obj and int(obj['Resultado']['QuantidadePaginas']) == 0:	
