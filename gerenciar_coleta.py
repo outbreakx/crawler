@@ -290,7 +290,7 @@ class GerenciarColeta():
 
 		if int(val/tmp) > 100:
 			return int(val * 0.02)
-		return tmp
+		return int(tmp)
 
 
 	##
