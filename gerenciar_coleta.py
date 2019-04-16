@@ -256,6 +256,7 @@ class GerenciarColeta():
 			else:
 				# insere os dados..
 				db.inserir(dados)
+			print('acabou a página:{}'.format(pagina))
 
 	##
 	## @brief      o quantidade que cada thread vai processar
@@ -284,7 +285,7 @@ class GerenciarColeta():
 			return 25
 		elif val < 2000:
 			return 30
-		return 50
+		return int(val * 0.01)
 
 
 	##
@@ -303,8 +304,9 @@ class GerenciarColeta():
 		self.definir_pagina(pagina_inicial)
 		
 		pagina_final = (cs.pegar_pagina_total() if pagina_final == -1 else pagina_final) + 1
+		print('total de paginas:'.format(pagina_inicial))
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
-
+		print('vai incrementar: {}'.format(increase_rate))
 		threads = []
 		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):			
 			thread = threading.Thread(target=self.rodar_intervalo, args=[chunk])
@@ -313,6 +315,7 @@ class GerenciarColeta():
 
 		l = len(threads) 
 		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+		print('total de threads:{}'.format(l))
 		for i, item in enumerate(threads):
 			item.join()
 			time.sleep(0.1)
