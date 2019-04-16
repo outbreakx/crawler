@@ -76,7 +76,7 @@ def pegar_cookie(mudar=True):
 		print('merda...')
 		return cookie
 
-	headers = {
+	header = {
 		'user-agent': random.choice(user_agents)
 	}
 	proxy = {
@@ -88,7 +88,7 @@ def pegar_cookie(mudar=True):
 	while tentativas < 20:
 		proxy['http'] = pegar_proxies()
 		try:
-			req = requests.get('https://www.zapimoveis.com.br/', headers=headers)
+			req = requests.get('https://www.zapimoveis.com.br/', headers=header)
 
 			if req.status_code == 200:
 				cookie = req.headers['Set-Cookie']
