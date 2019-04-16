@@ -84,6 +84,7 @@ def pegar_cookie(mudar=True):
 	}
 	req = None
 	tentativas = 0
+	print('meu deus')
 	while tentativas < 20:
 		proxy['http'] = random.choice(proxies)
 		try :
