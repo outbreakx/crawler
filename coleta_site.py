@@ -321,6 +321,7 @@ class ColetarSite():
 				if req.status_code == 200:
 					break
 			except:
+				print('falhou..')
 				time.sleep(random.choice([2,4,6,8]))
 				pass
 			tentativas += 1
