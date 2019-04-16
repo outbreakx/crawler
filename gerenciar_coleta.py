@@ -286,7 +286,11 @@ class GerenciarColeta():
 			return 25
 		elif val < 2000:
 			return 30
-		return int(val * 0.01)
+		tmp = val * 0.01
+
+		if int(val/tmp) > 100:
+			return int(val * 0.02)
+		return tmp
 
 
 	##
