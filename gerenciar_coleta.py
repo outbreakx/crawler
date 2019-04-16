@@ -57,7 +57,7 @@ class GerenciarColeta():
 	## @param      area_util_minima  The area utility minima
 	## @param      area_util_maxima  The area utility maxima
 	##
-	def __init__(self,acao = TipoAcao.comprar, tipo = TipoResidencia.todos, onde=None, pagina=1, qnt_quartos=None,qnt_suites=None,qnt_vagas=None,area_util_minima=None,area_util_maxima=None):
+	def __init__(self,acao = TipoAcao.venda, tipo = TipoResidencia.todos, onde=None, pagina=1, qnt_quartos=None,qnt_suites=None,qnt_vagas=None,area_util_minima=None,area_util_maxima=None):
 
 		self.acao = acao
 		self.tipo = tipo		
@@ -151,7 +151,7 @@ class GerenciarColeta():
 	## @return    retorna a ação
 	##
 	def pegar_acao(self):
-		if TipoAcao.comprar == self.acao:
+		if TipoAcao.venda == self.acao:
 			return 'venda/'			
 		elif TipoAcao.alugar == self.acao:
 			return 'aluguel/'
