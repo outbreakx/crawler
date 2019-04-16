@@ -303,10 +303,10 @@ class GerenciarColeta():
 		cs = ColetarSite(self.gerar_data(pagina_inicial))	
 				
 		pagina_final = (cs.pegar_pagina_total() if pagina_final == -1 else pagina_final) + 1
-		if pagina_final == 0 or < pagina_final < -1:
+		if pagina_final == 0 or pagina_final < -1:
 			print("não foi possível pegar a página final...")
 			return False
-		
+
 		print('total de paginas:{}'.format(pagina_final))
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
 		print('vai incrementar: {}'.format(increase_rate))
