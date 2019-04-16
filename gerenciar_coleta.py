@@ -248,15 +248,15 @@ class GerenciarColeta():
 		#cria a instancia da db
 		db = DB()
 		# pra cada página coletar as informações...
+		total_dados = []
 		for pagina in paginas:			
 			cs = ColetarSite(self.gerar_data(pagina))	
 			dados = cs.pegar_info()
-			if not dados:
-				break
-			else:
+			if dados:
 				# insere os dados..
-				db.inserir(dados)
+				total_dados += dados
 			print('acabou a página:{}'.format(pagina))
+		db.inserir(total_dados)
 
 	##
 	## @brief      o quantidade que cada thread vai processar

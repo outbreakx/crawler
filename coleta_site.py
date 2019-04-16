@@ -123,6 +123,7 @@ class ColetarSite():
 			try:
 				obj = self.pegar_dados(self.data)
 			except:
+				print('deu erro ao pegar info...')
 				pass
 			contador += 1
 		if obj and int(obj['Resultado']['QuantidadePaginas']) == 0:	
@@ -309,7 +310,7 @@ class ColetarSite():
 		
 
 		# garante que vai tentar 50 vezes pegar os dados com proxies...
-		while tentativas < 50:
+		while tentativas < 5:
 			proxy['http'] = random.choice(proxies)
 			header['cookie'] = pegar_cookie()
 			s = requests.Session()
@@ -319,7 +320,7 @@ class ColetarSite():
 				if req.status_code == 200:
 					break
 			except:
-				time.sleep(random.choice([2,4,6,8,10,12]))
+				time.sleep(random.choice([2,4,6,8]))
 				pass
 			tentativas += 1
 		obj = None
