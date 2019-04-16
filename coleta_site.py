@@ -67,6 +67,7 @@ cookie = None
 
 def pegar_cookie(mudar=True):
 	if not mudar and cookie != None:
+		print('merda...')
 		return cookie
 
 	headers = {
