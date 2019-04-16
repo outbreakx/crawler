@@ -63,9 +63,12 @@ def testar_proxy(proxy):
 #atualizar_proxies()
 proxies = pegar_proxies()
 user_agents = pegar_user_agents()
+cookie = None
 
+def pegar_cookie(mudar=True):
+	if not mudar and cookie != None:
+		return cookie
 
-def pegar_cookie():
 	headers = {
 		'user-agent': random.choice(user_agents)
 	}
@@ -73,10 +76,14 @@ def pegar_cookie():
 		'http' : ''
 	}
 	req = None
-	while not req:
+	tentativas = 0
+	while tentativas < 20:
 		proxy['http'] = random.choice(proxies)
 		req = requests.get('https://www.zapimoveis.com.br/', headers=headers, proxies = proxy)
-	return req.headers['Set-Cookie']
+		tentativas += 1
+
+	cookie = req.headers['Set-Cookie']
+	return cookie
 
 ##
 ## @brief      Class for coletar site.
@@ -265,10 +272,11 @@ class ColetarSite():
 				#print('entrou')
 
 				# tenta pegar o número trocando de proxies...
-				while True:
+				tentativas = 0
+				while tentativas < 10:
 					try:
 						proxy['http'] = random.choice(proxies)
-						header['cookie'] = pegar_cookie()
+						header['cookie'] = pegar_cookie(True if tentativas > 0 else False)
 						req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data))
 						s = requests.Session()
 						s.mount('https://', requests.adapters.HTTPAdapter(max_retries=1))
@@ -284,7 +292,8 @@ class ColetarSite():
 							time.sleep(random.choice([2,4,6]))	
 					except Exception as e:
 						#print(traceback.format_exc())
-						pass			
+						pass
+					tentativas += 1			
 		else:
 			obj = json.loads(req.text)
 		return {'status': req.status_code, 'data' : obj}
@@ -314,7 +323,7 @@ class ColetarSite():
 		# garante que vai tentar 50 vezes pegar os dados com proxies...
 		while tentativas < 5:
 			proxy['http'] = random.choice(proxies)
-			header['cookie'] = pegar_cookie()
+			header['cookie'] = pegar_cookie(True if tentativas > 0 else False)
 			s = requests.Session()
 			s.mount('http://', requests.adapters.HTTPAdapter(max_retries=1))
 			print('22222222222222222222222')
