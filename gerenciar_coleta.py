@@ -299,12 +299,10 @@ class GerenciarColeta():
 	def rodar(self, pagina_inicial = 1, pagina_final = -1):
 
 		# uma instancia de coleta de dados
-		cs = ColetarSite(self.gerar_data())	
-		# defini a página que vai começar..
-		self.definir_pagina(pagina_inicial)
-		
+		cs = ColetarSite(self.gerar_data(pagina_inicial))	
+				
 		pagina_final = (cs.pegar_pagina_total() if pagina_final == -1 else pagina_final) + 1
-		print('total de paginas:'.format(pagina_inicial))
+		print('total de paginas:{}'.format(pagina_final))
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
 		print('vai incrementar: {}'.format(increase_rate))
 		threads = []
