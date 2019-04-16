@@ -338,19 +338,22 @@ class ColetarSite():
 		# garante que vai tentar 50 vezes pegar os dados com proxies...
 		while tentativas < 5:
 			proxy['http'] = random.choice(proxies)
-			print('WTF1111')
+			tmp_cookie = None
 			try:
-
 				if tentativas > 0:
-					header['cookie'] = pegar_cookie(True)
+					tmp_cookie = pegar_cookie(True)
+					header['cookie'] = tmp_cookie
 				else:
-					header['cookie'] = pegar_cookie()
-				print('WTF22222')
+					tmp_cookie = pegar_cookie()
+					header['cookie'] = tmp_cookie
 			except Exception as e:
 				print("porra:" + str(e))
+
+			if not tmp_cookie:
+				continue
+
 			s = requests.Session()
 			s.mount('http://', requests.adapters.HTTPAdapter(max_retries=1))
-			print('22222222222222222222222')
 			try:			
 				req = s.post(API['padrao'],proxies = proxy, headers=header,data=urllib.parse.urlencode(data))
 				if req.status_code == 200:
