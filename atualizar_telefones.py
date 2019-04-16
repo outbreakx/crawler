@@ -144,17 +144,26 @@ nao_coletados = []
 
 
 for i, item in  enumerate(data):
-	dados = db.pegar_dados(item['id'])
+	dados = None
+	try:
+		dados = db.pegar_dados(item['id'])
+	except:
+		pass
 	#checamos se existe já algum telefone para esse id, então pulamos para o próximo id.
-	if len(dados['dados_contato']['telefone']) > 0:
+	if not dados or len(dados['dados_contato']['telefone']) > 0:
 		continue
+
 	nao_coletados.append(item)
 
 
 l = len(nao_coletados)
 printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 for i,item in enumerate(nao_coletados):
-	tmp = pegar_numero(item['id'],item['transacao'])
+	tmp = None
+	try:
+		tmp = pegar_numero(item['id'],item['transacao'])
+	except: 
+		pass
 
 	telefones = []
 	if tmp:					
@@ -162,5 +171,5 @@ for i,item in enumerate(nao_coletados):
 			for telefone in tmp['Telefones']:
 				if telefone['DDD']:
 					telefones.append(telefone['DDD'] + telefone['Numero'])
-	db.atualizar_telefone(item['id'], telefones)
+		db.atualizar_telefone(item['id'], telefones)
 	printProgressBar(i + 1, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
