@@ -296,6 +296,7 @@ class GerenciarColeta():
 	def rodar(self, pagina_inicial = 1, pagina_final = -1):
 
 		# uma instancia de coleta de dados
+		print('começando........')
 		cs = ColetarSite(self.gerar_data(pagina_inicial))	
 		if pagina_final == -1:
 			pagina_final = cs.pegar_pagina_total()
