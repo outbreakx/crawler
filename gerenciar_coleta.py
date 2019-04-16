@@ -270,27 +270,17 @@ class GerenciarColeta():
 	def pegar_taxa_incremento(self, val):
 		if val < 5:
 			return 1
-		elif val < 15:
-			return 2
 		elif val < 50:
-			return 3
-		elif val < 100:
-			return 4
-		elif val < 200:
-			return 8
-		elif val < 300:
-			return 10
-		elif val < 500:
-			return 15
-		elif val < 1000:
-			return 25
-		elif val < 2000:
-			return 30
-		tmp = val * 0.01
+			return 2
 
-		if int(val/tmp) > 100:
-			return int(val * 0.02)
-		return int(tmp)
+		div = 3
+		while True:
+			res = int(val/div)
+			if res > 50:
+				div += 1
+			else:
+				break
+		return div
 
 
 	##
