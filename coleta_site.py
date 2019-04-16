@@ -93,6 +93,8 @@ def pegar_cookie(mudar=True):
 			if req.status_code == 200:
 				cookie = req.headers['Set-Cookie']
 				return cookie
+			else:
+				print('q merda foi essa:' + str(req.text))
 		except:
 			print('to aqui otario....')
 			time.sleep(random.choice([2,4,6]))
