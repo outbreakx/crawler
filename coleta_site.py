@@ -70,7 +70,12 @@ def pegar_cookie(mudar=True):
 		return cookie
 
 	headers = {
-		'user-agent': random.choice(user_agents)
+		'user-agent': random.choice(user_agents),
+		'upgrade-insecure-requests:': '1',
+		'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+		'accept-encoding': 'gzip, deflate, br',
+		'accept-language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+		'cache-control': 'max-age=0'
 	}
 	proxy = {
 		'http' : ''
@@ -81,6 +86,7 @@ def pegar_cookie(mudar=True):
 		proxy['http'] = random.choice(proxies)
 		req = requests.get('https://www.zapimoveis.com.br/', headers=headers, proxies = proxy)
 		tentativas += 1
+		time.sleep(random.choice([2,4,6]))
 
 	cookie = req.headers['Set-Cookie']
 	return cookie
