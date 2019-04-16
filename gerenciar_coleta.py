@@ -276,10 +276,11 @@ class GerenciarColeta():
 		div = 3
 		while True:
 			res = int(val/div)
-			if res > 50:
+			if res >= 50:
 				div += 1
 			else:
 				break
+		print('pegou.. incremento')
 		return div
 
 
