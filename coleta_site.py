@@ -86,7 +86,7 @@ def pegar_cookie(mudar=True):
 	tentativas = 0
 	print('meu deus')
 	while tentativas < 20:
-		proxy['http'] = random.choice(proxies)
+		proxy['http'] = pegar_proxies()
 		try:
 			req = requests.get('https://www.zapimoveis.com.br/', headers=headers, proxies = proxy)
 
@@ -265,7 +265,7 @@ class ColetarSite():
 		header['cookie'] = pegar_cookie()
 
 		
-		proxy['http'] = random.choice(proxies) if not self.proxy_ else self.proxy_
+		proxy['http'] = pegar_proxies() if not self.proxy_ else self.proxy_
 
 		# tento pegar os dados do telefone
 		req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data), proxies=proxy)
@@ -292,7 +292,7 @@ class ColetarSite():
 				tentativas = 0
 				while tentativas < 10:
 					try:
-						proxy['http'] = random.choice(proxies)
+						proxy['http'] = pegar_proxies()
 						if tentativas > 0:
 							header['cookie'] = pegar_cookie(True)
 						else:
@@ -342,7 +342,7 @@ class ColetarSite():
 
 		# garante que vai tentar 50 vezes pegar os dados com proxies...
 		while tentativas < 5:
-			proxy['http'] = random.choice(proxies)
+			proxy['http'] = pegar_proxies()
 			tmp_cookie = None
 			try:
 				if tentativas > 0:

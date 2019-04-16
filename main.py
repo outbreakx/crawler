@@ -16,6 +16,7 @@ print('versão: {}'.format(VERSAO))
 
 # variáveis de configuração !
 
+'''
 acao = TipoAcao.venda
 tipo = TipoResidencia.apartamento_padrao
 onde = 'mg+belo-horizonte' # estado + cidade
@@ -34,3 +35,25 @@ pagina_final = -1 # vamos pegar 5 páginas
 gerenciar = GerenciarColeta(acao=acao, tipo=tipo,onde=onde,qnt_quartos=qnt_quartos,qnt_suites=qnt_suites,qnt_vagas=qnt_vagas,area_util_minima=area_util_minima,area_util_maxima=area_util_maxima)
 # iniciamos a coleta !
 gerenciar.rodar(pagina_inicial=pagina_inicial,pagina_final=pagina_final)
+'''
+
+from MongoProxies import *
+def pegar_user_agents():
+	with open('user_agents.txt') as f:
+		user_agents = []
+		for linha in f.readlines():
+			if len(linha) > 0:
+				user_agents.append(linha.rstrip())
+		return user_agents
+
+
+headers = {
+	'user-agent': random.choice(pegar_user_agents())
+}
+proxy = {
+	'http' : ''
+}
+
+req = requests.get('https://www.zapimoveis.com.br/', headers=headers)
+
+print(req.text)
