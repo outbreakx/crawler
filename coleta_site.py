@@ -122,6 +122,7 @@ class ColetarSite():
 		while obj == None and contador < 10:
 			try:
 				obj = self.pegar_dados(self.data)
+				print('pego obj...')
 			except:
 				print('deu erro: {}'.format(contador) )
 				pass
