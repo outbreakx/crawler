@@ -130,8 +130,7 @@ class MongoProxies:
         document_cursor = self.my_collection.aggregate([
             { '$match' : 
                 {
-                    'https':'no',
-                    'country': 'Brazil',
+                    'https':'no' #,'country': 'Brazil',
                 }
             },
             {'$sample' :
