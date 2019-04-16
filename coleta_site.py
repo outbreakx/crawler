@@ -309,6 +309,7 @@ class ColetarSite():
 		req = None
 		tentativas = 0
 		
+		print('iuedwhduidwhwdueihw')
 
 		# garante que vai tentar 50 vezes pegar os dados com proxies...
 		while tentativas < 5:
