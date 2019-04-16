@@ -142,7 +142,6 @@ l = db.pegar_total()
 nao_coletados = []
 
 
-printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 
 for i, item in  enumerate(data):
 	dados = db.pegar_dados(item['id'])
@@ -151,7 +150,10 @@ for i, item in  enumerate(data):
 		continue
 	nao_coletados.append(item)
 
-for item in nao_coletados:
+
+l = len(nao_coletados)
+printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+for i,item in enumerate(nao_coletados):
 	tmp = pegar_numero(item['id'],item['transacao'])
 
 	telefones = []
