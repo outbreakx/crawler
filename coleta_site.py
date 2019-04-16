@@ -283,7 +283,10 @@ class ColetarSite():
 				while tentativas < 10:
 					try:
 						proxy['http'] = random.choice(proxies)
-						header['cookie'] = pegar_cookie(True if tentativas > 0 else False)
+						if tentativas > 0:
+							header['cookie'] = pegar_cookie(True)
+						else:
+							header['cookie'] = pegar_cookie()
 						req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data))
 						s = requests.Session()
 						s.mount('https://', requests.adapters.HTTPAdapter(max_retries=1))
@@ -331,7 +334,10 @@ class ColetarSite():
 		while tentativas < 5:
 			proxy['http'] = random.choice(proxies)
 			print('WTF1111')
-			header['cookie'] = pegar_cookie(True if tentativas > 0 else False)
+			if tentativas > 0:
+				header['cookie'] = pegar_cookie(True)
+			else:
+				header['cookie'] = pegar_cookie()
 			print('WTF22222')
 			s = requests.Session()
 			s.mount('http://', requests.adapters.HTTPAdapter(max_retries=1))
