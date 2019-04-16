@@ -139,15 +139,19 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
 
 
 l = db.pegar_total()
+nao_coletados = []
+
 
 printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
-for i, item in enumerate(data):
-	# pegamos o id...
+
+for i, item in  enumerate(data):
 	dados = db.pegar_dados(item['id'])
 	#checamos se existe já algum telefone para esse id, então pulamos para o próximo id.
 	if len(dados['dados_contato']['telefone']) > 0:
 		continue
-		
+	nao_coletados.append(item)
+
+for item in nao_coletados:
 	tmp = pegar_numero(item['id'],item['transacao'])
 
 	telefones = []
@@ -157,5 +161,4 @@ for i, item in enumerate(data):
 				if telefone['DDD']:
 					telefones.append(telefone['DDD'] + telefone['Numero'])
 	db.atualizar_telefone(item['id'], telefones)
-	time.sleep(0.1)	
 	printProgressBar(i + 1, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
