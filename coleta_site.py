@@ -317,6 +317,7 @@ class ColetarSite():
 			header['cookie'] = pegar_cookie()
 			s = requests.Session()
 			s.mount('http://', requests.adapters.HTTPAdapter(max_retries=1))
+			print('22222222222222222222222')
 			try:			
 				req = s.post(API['padrao'],proxies = proxy, headers=header,data=urllib.parse.urlencode(data))
 				if req.status_code == 200:
