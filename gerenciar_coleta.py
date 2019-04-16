@@ -256,7 +256,7 @@ class GerenciarColeta():
 				# insere os dados..
 				total_dados += dados
 				print('coletou os dados da página atual: ' + str(pagina))
-			print('acabou a página:{}'.format(pagina))
+			#print('acabou a página:{}'.format(pagina))
 		db.inserir(total_dados)
 
 	##
