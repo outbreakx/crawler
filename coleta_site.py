@@ -353,6 +353,7 @@ class ColetarSite():
 				print("porra:" + str(e))
 
 			if not tmp_cookie:
+				tentativas += 1
 				continue
 
 			s = requests.Session()
