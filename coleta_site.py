@@ -119,7 +119,7 @@ class ColetarSite():
 
 		obj = None
 		contador = 0
-		while obj == None or contador < 10:
+		while obj == None and contador < 10:
 			try:
 				obj = self.pegar_dados(self.data)
 				print('conseguiu pegar info...:{} '.format(len(obj)))
