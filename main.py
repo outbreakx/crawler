@@ -16,7 +16,7 @@ print('versão: {}'.format(VERSAO))
 
 # variáveis de configuração !
 
-acao = TipoAcao.lancamento
+acao = TipoAcao.comprar
 tipo = TipoResidencia.apartamento_padrao
 onde = 'sp+sao-paulo' # estado + cidade
 qnt_quartos = None
