@@ -34,6 +34,12 @@ def pegar_proxies():
 ## @return     lista de agentes
 ##
 def pegar_user_agents():
+	with open('user_agents.txt') as f:
+		user_agents = []
+		for linha in f.readlines():
+			if len(linha) > 0:
+				user_agents.append(linha.rstrip())
+		return user_agents
 	return ua.getRandomUserAgent()
 
 
@@ -71,11 +77,7 @@ def pegar_cookie(mudar=True):
 		return cookie
 
 	headers = {
-		'user-agent': random.choice(user_agents),
-		'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-		'accept-encoding': 'gzip, deflate, br',
-		'accept-language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
-		'cache-control': 'max-age=0'
+		'user-agent': random.choice(user_agents)
 	}
 	proxy = {
 		'http' : ''
