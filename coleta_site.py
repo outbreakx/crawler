@@ -122,6 +122,7 @@ class ColetarSite():
 		while obj == None or contador < 10:
 			try:
 				obj = self.pegar_dados(self.data)
+				print('conseguiu pegar info...')
 			except:
 				print('deu erro ao pegar info...')
 				pass
