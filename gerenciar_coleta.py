@@ -274,6 +274,7 @@ class GerenciarColeta():
 			return 2
 
 		div = 3
+		print('entrou nessa merda')
 		while True:
 			res = int(val/div)
 			if res >= 50:
