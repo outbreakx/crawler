@@ -318,7 +318,8 @@ class GerenciarColeta():
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
 		print('vai incrementar: {}'.format(increase_rate))
 		threads = []
-		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):			
+		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):
+			print('tamanho chunck:{}'.format(len(chunk)))			
 			thread = threading.Thread(target=self.rodar_intervalo, args=[chunk])
 			thread.start()
 			threads.append(thread)	
