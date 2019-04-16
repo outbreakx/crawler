@@ -84,12 +84,17 @@ def pegar_cookie(mudar=True):
 	tentativas = 0
 	while tentativas < 20:
 		proxy['http'] = random.choice(proxies)
-		print('to aqui otario....')
-		req = requests.get('https://www.zapimoveis.com.br/', headers=headers, proxies = proxy)
-		tentativas += 1
-		time.sleep(random.choice([2,4,6]))
+		try :
+			req = requests.get('https://www.zapimoveis.com.br/', headers=headers, proxies = proxy)
 
-	cookie = req.headers['Set-Cookie']
+			if req.status_code == 200:
+				cookie = req.headers['Set-Cookie']
+				return cookie
+		except:
+			print('to aqui otario....')
+			tentativas += 1
+			time.sleep(random.choice([2,4,6]))
+	cookie = None
 	return cookie
 
 ##
