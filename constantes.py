@@ -29,7 +29,7 @@ headers = {
 
 # DEFINIÇÕES DE AÇÕES PARA BUSCA
 class TipoAcao(enum.Enum):
-	comprar = 1,
+	venda = 1,
 	alugar = 2,
 	lancamento = 3
 
