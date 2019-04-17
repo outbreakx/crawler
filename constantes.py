@@ -10,6 +10,10 @@ API = {
 ARQUIVO_PROXY = 'proxies.txt'
 ARQUIVO_USER_AGENT = 'user_agents.txt'
 
+# THREADS
+
+MAX_THREADS = 20
+
 # HEADRERS DOS REQUESTS
 headers = {
 	'padrao' : {
