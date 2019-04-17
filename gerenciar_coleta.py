@@ -352,7 +352,7 @@ class GerenciarColeta():
 
 		print('total de paginas:{}'.format(pagina_final))
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
-		print('vai incrementar: {}'.format(increase_rate))
+		print('paginas por thread: {}'.format(increase_rate))
 		threads = []
 		total_paginas = 0		
 		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):			

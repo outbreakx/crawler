@@ -317,8 +317,8 @@ class ColetarSite():
 		tentativas = 0
 		
 
-		# garante que vai tentar 50 vezes pegar os dados com proxies...
-		while tentativas < 5:
+		# garante que vai tentar 10 vezes pegar os dados com proxies...
+		while tentativas < 10:
 			proxy['http'] = pegar_proxies()
 			header['cookie'] = pegar_cookie()
 			s = requests.Session()
