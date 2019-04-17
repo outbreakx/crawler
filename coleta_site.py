@@ -343,7 +343,6 @@ class ColetarSite():
 		# garante que vai tentar 50 vezes pegar os dados com proxies...
 		while tentativas < 5:
 			proxy['http'] = pegar_proxies()
-			'''
 			tmp_cookie = None
 			try:
 				if tentativas > 0:
@@ -358,7 +357,6 @@ class ColetarSite():
 			if not tmp_cookie:
 				tentativas += 1
 				continue
-			'''
 
 			s = requests.Session()
 			s.mount('http://', requests.adapters.HTTPAdapter(max_retries=1))
