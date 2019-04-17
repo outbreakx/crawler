@@ -89,7 +89,7 @@ def pegar_cookie(mudar=True):
 		proxy['http'] = pegar_proxies()
 		try:
 			req = requests.get('https://www.zapimoveis.com.br/', headers=header, proxies=proxy)
-			
+
 			if req.status_code == 200:
 				cookie = req.headers['Set-Cookie']
 				return cookie
@@ -343,6 +343,7 @@ class ColetarSite():
 		# garante que vai tentar 50 vezes pegar os dados com proxies...
 		while tentativas < 5:
 			proxy['http'] = pegar_proxies()
+			'''
 			tmp_cookie = None
 			try:
 				if tentativas > 0:
@@ -357,6 +358,7 @@ class ColetarSite():
 			if not tmp_cookie:
 				tentativas += 1
 				continue
+			'''
 
 			s = requests.Session()
 			s.mount('http://', requests.adapters.HTTPAdapter(max_retries=1))
