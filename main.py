@@ -21,7 +21,7 @@ print('versão: {}'.format(VERSAO))
 acao = TipoAcao.venda
 tipo = TipoResidencia.apartamento_padrao
 onde = 'mg+belo-horizonte' # estado + cidade
-qnt_quartos = None
+qnt_quartos = 1
 qnt_suites = None
 qnt_vagas = None
 area_util_minima = None
