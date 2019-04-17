@@ -249,8 +249,7 @@ class GerenciarColeta():
 		db = DB()
 		# pra cada página coletar as informações...
 		#total_dados = []
-		data = threading.local()
-		data.concluido = 0
+		
 		for pagina in paginas:			
 			cs = ColetarSite(self.gerar_data(pagina))	
 			dados = cs.pegar_info()
@@ -269,8 +268,6 @@ class GerenciarColeta():
 			else:
 				print('não coletou a página:' + str(pagina))
 			#print('acabou a página:{}'.format(pagina)
-			data.concluido += 1
-
 	##
 	## @brief      o quantidade que cada thread vai processar
 	##
@@ -334,7 +331,6 @@ class GerenciarColeta():
 		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 
 		for i, item in enumerate(threads):
-			print('buceta:' + item.concluido)
 			item.join()
 			time.sleep(0.1)
 			printProgressBar(i + 1, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
