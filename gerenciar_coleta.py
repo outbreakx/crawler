@@ -256,6 +256,8 @@ class GerenciarColeta():
 				# insere os dados..
 				total_dados += dados
 				print('coletou os dados da página atual: ' + str(pagina))
+			else:
+				print('não coletou a página:' + str(pagina))
 			print('acabou a página:{}'.format(pagina))
 		db.inserir(total_dados)
 
@@ -274,14 +276,12 @@ class GerenciarColeta():
 			return 2
 
 		div = 3
-		print('entrou nessa merda')
 		while True:
 			res = int(val/div)
 			if res >= 15:
 				div += 1
 			else:
 				break
-		print('pegou.. incremento')
 		return div
 
 
@@ -311,8 +311,7 @@ class GerenciarColeta():
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
 		print('vai incrementar: {}'.format(increase_rate))
 		threads = []
-		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):
-			print('tamanho chunck:{}'.format(len(chunk)))			
+		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):			
 			thread = threading.Thread(target=self.rodar_intervalo, args=[chunk])
 			thread.start()
 			threads.append(thread)	
