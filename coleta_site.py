@@ -88,7 +88,7 @@ def pegar_cookie(mudar=True):
 	while tentativas < 20:
 		proxy['http'] = pegar_proxies()
 		try:
-			req = requests.get('https://www.zapimoveis.com.br/', headers=header, proxy=proxy)
+			req = requests.get('https://www.zapimoveis.com.br/', headers=header, proxies=proxy)
 			
 			if req.status_code == 200:
 				cookie = req.headers['Set-Cookie']
