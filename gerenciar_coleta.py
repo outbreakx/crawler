@@ -277,7 +277,7 @@ class GerenciarColeta():
 		print('entrou nessa merda')
 		while True:
 			res = int(val/div)
-			if res >= 50:
+			if res >= 20:
 				div += 1
 			else:
 				break
