@@ -7,6 +7,8 @@ from coleta_site import ColetarSite
 from db import DB
 
 data = threading.local()
+data.total_paginas = 0
+data.concluido = 0
 
 def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
     """
