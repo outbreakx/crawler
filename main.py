@@ -16,27 +16,6 @@ print('versão: {}'.format(VERSAO))
 
 
 
-import requests
-import urllib
-import json
-
-data = {
-	'tipoOferta': 'Imovel',
-	'paginaAtual': 1,
-	'pathName': '/venda/apartamentos/mg+belo-horizonte/',
-	'hashFragment': { "filtrodormitorios":"1;","pagina":"1"}
-}
-header = headers['padrao']
-req = requests.post(API['padrao'],headers=header,data=urllib.parse.urlencode(data))
-data = json.loads(req.text)
-
-with open('data.json', 'w') as outfile:
-    json.dump(data, outfile,indent=4)
-
-
-
-
-
 # variáveis de configuração !
 
 acao = TipoAcao.venda

@@ -305,13 +305,9 @@ class GerenciarColeta():
 					tentativas += 1
 
 			if dados:
-				# insere os dados..
-				#total_dados += dados
+				# insere os dados..				
 				#print('coletou os dados da página atual: ' + str(pagina))
 				db.inserir(dados)
-			else:
-				print('não coletou a página:' + str(pagina))
-			#print('acabou a página:{}'.format(pagina)
 	##
 	## @brief      o quantidade que cada thread vai processar
 	##
@@ -351,8 +347,6 @@ class GerenciarColeta():
 	##
 	##
 	def rodar(self, pagina_inicial = 1, pagina_final = -1):
-
-		print(self.gerar_data(pagina_inicial))
 		# uma instancia de coleta de dados
 		cs = ColetarSite(self.gerar_data(pagina_inicial))	
 		if pagina_final == -1:
@@ -385,5 +379,5 @@ class GerenciarColeta():
 			printProgressBar(total_concluido, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 			if total_concluido == total_paginas:
 				break
-			time.sleep(0.1)
+			time.sleep(1)
 

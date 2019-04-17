@@ -122,8 +122,7 @@ class ColetarSite():
 		# pegamos a pagina.. mas não tem nada...
 		
 		pagina_id = self.data['hashFragment']['pagina'] 
-		tmp_data = self.data
-		#print('wtf... tá rodando isso?')
+		tmp_data = self.data		
 		obj = None
 		contador = 0
 		while obj == None and contador < 10:
@@ -131,7 +130,7 @@ class ColetarSite():
 				obj = self.pegar_dados(tmp_data)
 				#print('pego obj...')
 			except:
-				print('deu erro: {}'.format(obj) )
+				#print('deu erro: {}'.format(obj) )
 				pass
 			contador += 1
 		if obj and int(obj['Resultado']['QuantidadePaginas']) == 0:	
@@ -264,8 +263,7 @@ class ColetarSite():
 
 			# tenta dnv...
 			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies=proxy)
-			obj = json.loads(req.text)
-			#print(obj)
+			obj = json.loads(req.text)			
 
 			# tem captcha?
 			if obj['CaptchaId']:
@@ -281,13 +279,10 @@ class ColetarSite():
 						s.mount('https://', requests.adapters.HTTPAdapter(max_retries=1))
 						req = s.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies=proxy)
 						obj = obj = json.loads(req.text)
-						if not obj['CaptchaId'] or len(obj['CaptchaId'] ) == 0:
-							#print(obj)
-							self.proxy_ = proxy['http']
-							#print('saiu')										
+						if not obj['CaptchaId'] or len(obj['CaptchaId'] ) == 0:							
+							self.proxy_ = proxy['http']																	
 							break
-						else:			
-							#print('xdd')		
+						else:
 							time.sleep(random.choice([2,4,6]))	
 					except Exception as e:
 						#print(traceback.format_exc())
@@ -328,7 +323,7 @@ class ColetarSite():
 				if req.status_code == 200:
 					break
 			except:
-				print('falhou..')
+				#print('falhou..')
 				time.sleep(random.choice([2,4,6,8]))
 				pass
 			tentativas += 1
