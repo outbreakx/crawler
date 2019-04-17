@@ -373,7 +373,8 @@ class GerenciarColeta():
 		while True:
 			total_concluido = self.pegar_concluidos(threads)
 			print('total concluido:{}'.format(total_concluido))
+			printProgressBar(total_concluido, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 			if total_concluido == total_paginas:
 				break
-			printProgressBar(total_concluido, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
-			time.sleep(1)
+			time.sleep(0.1)
+
