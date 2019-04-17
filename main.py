@@ -1,4 +1,4 @@
-#from gerenciar_coleta import *
+from gerenciar_coleta import *
 from config import VERSAO
 from constantes import *
 print('versão: {}'.format(VERSAO))
