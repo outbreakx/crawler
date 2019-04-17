@@ -41,11 +41,12 @@ def chunks(l, n):
 
 
 class Test(threading.Thread):
-	def __init__(self,paginas):
+	def __init__(self,paginas,ref):
 		threading.Thread.__init__(self)
 		self.paginas = paginas
-	def run(self, ref):
-		print(ref.gerar_data(1))
+		self.ref = ref
+	def run(self):
+		print(self.ref.gerar_data(1))
 		'''
 		for pagina in paginas:
 			cs = ColetarSite(self.gerar_data(pagina))	
@@ -330,7 +331,7 @@ class GerenciarColeta():
 	##
 	##
 	def rodar(self, pagina_inicial = 1, pagina_final = -1):
-		test = Test([])
+		test = Test([], self)
 		test.start()
 
 		# uma instancia de coleta de dados
