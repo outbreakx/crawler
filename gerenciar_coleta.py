@@ -49,7 +49,8 @@ class Test(threading.Thread):
 		self.concluido = 0
 		self.total = len(self.paginas)
 	def run(self):
-
+		total = 0
+		xd = 0
 		for pagina in self.paginas:
 			cs = ColetarSite(self.ref.gerar_data(pagina))	
 			dados = cs.pegar_info()
@@ -59,12 +60,14 @@ class Test(threading.Thread):
 					cs = ColetarSite(self.ref.gerar_data(pagina))	
 					dados = cs.pegar_info()
 					tentativas += 1
-
 			if dados:
 				self.db.inserir(dados)
+				total += 1
+				xd += len(dados)
 			else:
 				print('não coletou a página:' + str(pagina))
 			self.concluido += 1
+		#print('inseriu {} paginas com {} dados'.format(total,xd))
 		
 
 
@@ -358,9 +361,8 @@ class GerenciarColeta():
 		else:
 			pagina_final += 1
 
-		print('total de paginas:{}'.format(pagina_final))
+		
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
-		print('paginas por thread: {}'.format(increase_rate))
 		threads = []
 		total_paginas = 0		
 		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):			

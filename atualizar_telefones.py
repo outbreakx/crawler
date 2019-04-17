@@ -44,78 +44,6 @@ user_agents = pegar_user_agents()
 
 
 
-def pegar_numero(id, transacao):
-	data = {
-		'parametros': {
-			"ImovelID":id,
-			"TipoOferta": 'CampanhaImovel',			
-			"Transacao": transacao
-		},
-		'__RequestVerificationToken': '0rA02O2FYGLCXpeSEzuKMYZ9zzOJamFDqK6BgcpcbHx1S7Atqp-HlJU_kG2z52TXqmBo6Y6KJN_v_8fme23oitgeZIM1'
-	}
-	proxy = {
-		'http' : ''
-	}
-
-	header = headers['telefone']
-	ua =  random.choice(user_agents)
-	
-	req = None
-
-	global proxy_
-
-		
-	proxy['http'] = random.choice(proxies) if not proxy_ else proxy_
-
-	# tento pegar os dados do telefone
-	try:
-		req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data), proxies=proxy)
-	except:
-		pass
-	obj = None
-	# funcionou?
-	if req and req.status_code == 200:
-		obj = json.loads(req.text)
-	# testa imovel..
-	if req and req.status_code == 500:
-		data['TipoOferta'] = 'Imovel'
-		try:
-			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies=proxy)
-		except:
-			pass
-
-	# se tiver captcha or se deu errado
-	if not obj or obj['CaptchaId']:
-		if req.status_code == 200:
-			obj = json.loads(req.text)
-		# tenta pegar o número trocando de proxies...
-		tentativas = 0
-		while tentativas < 15:
-			try:
-				proxy['http'] = random.choice(proxies)
-				header['user-agent'] = random.choice(user_agents)
-				req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data))
-				s = requests.Session()
-				s.mount('https://', requests.adapters.HTTPAdapter(max_retries=1))
-				req = s.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies=proxy)
-				if req.status_code == 200:
-					obj = json.loads(req.text)
-				if obj and (not obj['CaptchaId'] or len(obj['CaptchaId'] ) == 0):					
-					proxy_ = proxy['http']														
-					break
-				else:
-					
-					time.sleep(random.choice([2,4,6]))
-					if req.status_code == 403:
-						data['TipoOferta'] = 'CampanhaImovel'
-			except Exception as e:
-				print(traceback.format_exc())
-				time.sleep(random.choice([2,4,6]))
-				pass	
-			tentativas += 1		
-	else:
-		obj = json.loads(req.text)
-	return obj
 
 def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
     """
@@ -138,38 +66,80 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
         print()
 
 
+
+
+def pegar_num(id, transacao):
+	data = {
+		'parametros': {
+			"ImovelID": id,
+			"TipoOferta": 'CampanhaImovel',			
+			"Transacao": transacao
+		},
+		'__RequestVerificationToken': 'EYbyU3njELw8HXGwBrgvwFWb0yEnAXik9CTUowNx-yagjLTg04otZc4VSe4AWEJoCgeNrAxfLhW1KKfyw5kundOKmVk1'
+	}
+	header = headers['telefone']
+	#header['cookie'] = pegar_cookie()
+	proxy = {
+		'http' : ''
+	}
+	proxy['http'] = pegar_proxies()
+
+	try:
+		req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
+	except:
+		pass
+	if not req or req.status_code != 200:
+		data['parametros']['TipoOferta'] = 'Imovel'
+		try:
+			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
+		except:
+			pass
+	if not req:
+		return None
+	res = json.loads(req.text)
+
+	if res['CaptchaId']:
+		tentativas = 0
+		while tentativas < 5:
+			header['user-agent'] = random.choice(user_agents)
+			proxy['http'] = pegar_proxies()
+			try:
+				req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
+			except:
+				pass
+			if req and req.status_code == 200:
+				res = json.loads(req.text)
+				if not res['CaptchaId']:
+					break
+			else:
+				tentativas += 1
+				time.sleep(random.choice([2,4,6]))
+	return res
+
+
 l = db.pegar_total()
 nao_coletados = []
 
 
-
 for i, item in  enumerate(data):
-	dados = None
-	try:
-		dados = db.pegar_dados(item['id'])
-	except:
-		pass
 	#checamos se existe já algum telefone para esse id, então pulamos para o próximo id.
-	if not dados or len(dados['dados_contato']['telefone']) > 0:
+	if len(item['dados_contato']['telefone']) > 0:
 		continue
 
 	nao_coletados.append(item)
 
-
 l = len(nao_coletados)
-printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
-for i,item in enumerate(nao_coletados):
-	tmp = None
-	try:
-		tmp = pegar_numero(item['id'],item['transacao'])
-	except: 
-		pass
 
-	telefones = []
-	if tmp:					
-		if 'Telefones' in tmp and tmp['CaptchaId'] == None:														
+printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+for i, item in enumerate(nao_coletados):
+	tmp = pegar_num(item['id'], item['transacao'])
+
+	if tmp:
+		telefones = []
+		if 'Telefones' in tmp and tmp['CaptchaId'] == None and len(tmp['Telefones']):														
 			for telefone in tmp['Telefones']:
 				if telefone['DDD']:
 					telefones.append(telefone['DDD'] + telefone['Numero'])
-		db.atualizar_telefone(item['id'], telefones)
+			db.atualizar_telefone(item['id'], telefones)
 	printProgressBar(i + 1, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+	time.sleep(1)
