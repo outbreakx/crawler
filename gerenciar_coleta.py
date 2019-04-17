@@ -50,7 +50,7 @@ class Test(threading.Thread):
 		self.total = len(self.paginas)
 	def run(self):
 
-		for pagina in paginas:
+		for pagina in self.paginas:
 			cs = ColetarSite(self.ref.gerar_data(pagina))	
 			dados = cs.pegar_info()
 			if not dados:
@@ -370,7 +370,7 @@ class GerenciarColeta():
 		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 
 		while True:
-			total_concluido = self.pegar_concluidos()
+			total_concluido = self.pegar_concluidos(threads)
 			if total_concluido == total_paginas:
 				break
 			printProgressBar(total_concluido, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
