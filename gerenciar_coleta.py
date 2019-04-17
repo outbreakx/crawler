@@ -207,7 +207,12 @@ class GerenciarColeta():
 	##
 	##
 	def definir_quartos(self, val):
-		self.parametros_de_busca['filtrodormitorios'] = str(val) + (';' if val > 3 else '')
+		if val > 4:
+			self.parametros_de_busca['filtrodormitorios'] = '4;'
+		elif val < 0:
+			self.parametros_de_busca['filtrodormitorios'] = ''
+		else:
+			self.parametros_de_busca['filtrodormitorios'] = str(val) + ';'
 	
 	##
 	## @brief      define o numero de suites
@@ -217,10 +222,20 @@ class GerenciarColeta():
 	##
 	##
 	def definir_suites(self,val):
-		self.parametros_de_busca['filtrosuites'] = str(val) + (';' if val > 3 else '')
+		if val > 4:
+			self.parametros_de_busca['filtrosuites'] = '4;'
+		elif val < 0:
+			self.parametros_de_busca['filtrosuites'] = ''
+		else:
+			self.parametros_de_busca['filtrosuites'] = str(val) + ';'
 
 	def definir_vagas(self,val):
-		self.parametros_de_busca['filtrovagas'] = str(val) + (';' if val > 3 else '')
+		if val > 4:
+			self.parametros_de_busca['filtrovagas'] = '4;'
+		elif val < 0:
+			self.parametros_de_busca['filtrovagas'] = ''
+		else:
+			self.parametros_de_busca['filtrovagas'] = str(val) + ';'
 
 	##
 	## @brief      define o numero de metros minimos
