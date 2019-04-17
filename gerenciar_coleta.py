@@ -68,6 +68,7 @@ class Test(threading.Thread):
 			else:
 				print('não coletou a página:' + str(pagina))
 			self.concluido += 1
+		print('terminou...')
 		
 
 
