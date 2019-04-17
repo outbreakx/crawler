@@ -61,14 +61,10 @@ class Test(threading.Thread):
 					tentativas += 1
 
 			if dados:
-				# insere os dados..
-				#total_dados += dados
-				#print('coletou os dados da página atual: ' + str(pagina))
 				self.db.inserir(dados)
 			else:
 				print('não coletou a página:' + str(pagina))
 			self.concluido += 1
-		print('terminou...')
 		
 
 
