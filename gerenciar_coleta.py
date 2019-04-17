@@ -252,6 +252,10 @@ class GerenciarColeta():
 		for pagina in paginas:			
 			cs = ColetarSite(self.gerar_data(pagina))	
 			dados = cs.pegar_info()
+			if not dados:
+				cs = ColetarSite(self.gerar_data(pagina))	
+				dados = cs.pegar_info()
+				
 			if dados:
 				# insere os dados..
 				#total_dados += dados

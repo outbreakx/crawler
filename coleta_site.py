@@ -122,12 +122,13 @@ class ColetarSite():
 		# pegamos a pagina.. mas não tem nada...
 		
 		pagina_id = self.data['hashFragment']['pagina'] 
+		tmp_data = self.data
 		#print('wtf... tá rodando isso?')
 		obj = None
 		contador = 0
 		while obj == None and contador < 10:
 			try:
-				obj = self.pegar_dados(self.data)
+				obj = self.pegar_dados(tmp_data)
 				#print('pego obj...')
 			except:
 				print('deu erro: {}'.format(obj) )
