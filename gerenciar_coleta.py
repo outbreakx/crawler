@@ -39,6 +39,35 @@ def chunks(l, n):
     n = max(1, n)
     return (l[i:i+n] for i in range(0, len(l), n))
 
+
+class Test(threading.Thread):
+	def __init__(self,paginas):
+		threading.Thread.__init__(self)
+		self.paginas = paginas
+	def run(self, ref):
+		print(ref.gerar_data(1))
+		'''
+		for pagina in paginas:
+			cs = ColetarSite(self.gerar_data(pagina))	
+			dados = cs.pegar_info()
+			if not dados:
+				tentativas = 0
+				while not dados and tentativas < 10:
+					cs = ColetarSite(self.gerar_data(pagina))	
+					dados = cs.pegar_info()
+					tentativas += 1
+
+			if dados:
+				# insere os dados..
+				#total_dados += dados
+				#print('coletou os dados da página atual: ' + str(pagina))
+				db.inserir(dados)
+			else:
+				print('não coletou a página:' + str(pagina))
+		'''
+		
+
+
 ##
 ## @brief      Class for gerenciar coleta.
 ##
@@ -301,8 +330,11 @@ class GerenciarColeta():
 	##
 	##
 	def rodar(self, pagina_inicial = 1, pagina_final = -1):
+		test = Test([])
+		test.start()
 
 		# uma instancia de coleta de dados
+		'''
 		cs = ColetarSite(self.gerar_data(pagina_inicial))	
 		if pagina_final == -1:
 			pagina_final = cs.pegar_pagina_total()
@@ -334,3 +366,4 @@ class GerenciarColeta():
 			item.join()
 			time.sleep(0.1)
 			printProgressBar(i + 1, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+		'''
