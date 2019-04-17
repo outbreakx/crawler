@@ -324,7 +324,7 @@ class ColetarSite():
 					break
 			except:
 				#print('falhou..')
-				time.sleep(random.choice([2,4,6,8]))
+				time.sleep(random.choice([2,4,6]))
 				pass
 			tentativas += 1
 		obj = None
