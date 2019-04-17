@@ -328,7 +328,7 @@ class GerenciarColeta():
 			threads.append(thread)
 			data.total_paginas += len(chunk)	
 
-		l = len(data.total_paginas)
+		l = data.total_paginas
 
 		print('total de threads:{}'.format(l))
 
