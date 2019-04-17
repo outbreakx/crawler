@@ -45,16 +45,18 @@ class Test(threading.Thread):
 		threading.Thread.__init__(self)
 		self.paginas = paginas
 		self.ref = ref
+		self.db = DB()
+		self.concluido = 0
+		self.total = len(self.paginas)
 	def run(self):
-		print(self.ref.gerar_data(1))
-		'''
+
 		for pagina in paginas:
-			cs = ColetarSite(self.gerar_data(pagina))	
+			cs = ColetarSite(self.ref.gerar_data(pagina))	
 			dados = cs.pegar_info()
 			if not dados:
 				tentativas = 0
 				while not dados and tentativas < 10:
-					cs = ColetarSite(self.gerar_data(pagina))	
+					cs = ColetarSite(self.ref.gerar_data(pagina))	
 					dados = cs.pegar_info()
 					tentativas += 1
 
@@ -62,10 +64,10 @@ class Test(threading.Thread):
 				# insere os dados..
 				#total_dados += dados
 				#print('coletou os dados da página atual: ' + str(pagina))
-				db.inserir(dados)
+				self.db.inserir(dados)
 			else:
 				print('não coletou a página:' + str(pagina))
-		'''
+			self.concluido += 1
 		
 
 
@@ -321,6 +323,12 @@ class GerenciarColeta():
 				break
 		return div
 
+	def pegar_concluidos(self, arr):
+		cnt = 0
+		for item in arr:
+			cnt += item.concluido
+		return cnt
+
 
 	##
 	## @brief      rodar a coleta com base em intervalos
@@ -335,7 +343,6 @@ class GerenciarColeta():
 		test.start()
 
 		# uma instancia de coleta de dados
-		'''
 		cs = ColetarSite(self.gerar_data(pagina_inicial))	
 		if pagina_final == -1:
 			pagina_final = cs.pegar_pagina_total()
@@ -352,19 +359,18 @@ class GerenciarColeta():
 		threads = []
 		total_paginas = 0		
 		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):			
-			thread = threading.Thread(target=self.rodar_intervalo, args=[chunk])
+			thread = Test(chunk, self)
 			thread.start()
 			threads.append(thread)
 			total_paginas += len(chunk)	
 
-		l = len(threads)
+		l = total_paginas
 
-		print('total de threads:{}'.format(l))
-
+		#print('total de threads:{}'.format(l))
 		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 
-		for i, item in enumerate(threads):
-			item.join()
-			time.sleep(0.1)
-			printProgressBar(i + 1, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
-		'''
+		while True:
+			total_concluido = self.pegar_concluidos()
+			if total_concluido == total_paginas:
+				break
+			printProgressBar(total_concluido, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
