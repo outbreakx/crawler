@@ -11,7 +11,7 @@ ARQUIVO_PROXY = 'proxies.txt'
 ARQUIVO_USER_AGENT = 'user_agents.txt'
 
 # THREADS: ATENÇÃO, MANTER PRÓXIMO DE 12 OU ABAIXO PREFERENCIALMENTE, acima disso, causa a ativação de alguns sistemas anti spam deles de forma mais ostensiva.
-MAX_THREADS = 9
+MAX_THREADS = 7
 
 # HEADRERS DOS REQUESTS
 headers = {
