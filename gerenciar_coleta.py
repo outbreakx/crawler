@@ -6,6 +6,7 @@ from constantes import *
 from coleta_site import ColetarSite
 from db import DB
 
+data = threading.local()
 
 def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
     """
@@ -264,6 +265,7 @@ class GerenciarColeta():
 				#total_dados += dados
 				#print('coletou os dados da página atual: ' + str(pagina))
 				db.inserir(dados)
+				data.concluido += 1
 			else:
 				print('não coletou a página:' + str(pagina))
 			#print('acabou a página:{}'.format(pagina)
@@ -317,12 +319,15 @@ class GerenciarColeta():
 		increase_rate = self.pegar_taxa_incremento(pagina_final - pagina_inicial)
 		print('vai incrementar: {}'.format(increase_rate))
 		threads = []
+		data.concluido = 0
 		for chunk in chunks(range(pagina_inicial, pagina_final), increase_rate):			
 			thread = threading.Thread(target=self.rodar_intervalo, args=[chunk])
 			thread.start()
-			threads.append(thread)	
+			threads.append(thread)
+			data.total_paginas += len(chunk)	
 
-		l = len(threads) 
+		l = len(data.total_paginas)
+
 		print('total de threads:{}'.format(l))
 
 		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
