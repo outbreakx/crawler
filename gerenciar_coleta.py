@@ -248,18 +248,18 @@ class GerenciarColeta():
 		#cria a instancia da db
 		db = DB()
 		# pra cada página coletar as informações...
-		total_dados = []
+		#total_dados = []
 		for pagina in paginas:			
 			cs = ColetarSite(self.gerar_data(pagina))	
 			dados = cs.pegar_info()
 			if dados:
 				# insere os dados..
-				total_dados += dados
+				#total_dados += dados
 				#print('coletou os dados da página atual: ' + str(pagina))
+				db.inserir(dados)
 			else:
 				print('não coletou a página:' + str(pagina))
-			#print('acabou a página:{}'.format(pagina))
-		db.inserir(total_dados)
+			#print('acabou a página:{}'.format(pagina)
 
 	##
 	## @brief      o quantidade que cada thread vai processar
@@ -270,7 +270,7 @@ class GerenciarColeta():
 	## @return     { description_of_the_return_value }
 	##
 	def pegar_taxa_incremento(self, val):
-		if val < 5:
+		if val < MAX_THREADS:
 			return 1
 		elif val < 50:
 			return 2
@@ -316,8 +316,9 @@ class GerenciarColeta():
 			threads.append(thread)	
 
 		l = len(threads) 
-		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 		print('total de threads:{}'.format(l))
+
+		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
 		for i, item in enumerate(threads):
 			item.join()
 			time.sleep(0.1)

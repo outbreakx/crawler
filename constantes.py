@@ -12,7 +12,7 @@ ARQUIVO_USER_AGENT = 'user_agents.txt'
 
 # THREADS
 
-MAX_THREADS = 20
+MAX_THREADS = 25
 
 # HEADRERS DOS REQUESTS
 headers = {
