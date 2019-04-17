@@ -253,9 +253,12 @@ class GerenciarColeta():
 			cs = ColetarSite(self.gerar_data(pagina))	
 			dados = cs.pegar_info()
 			if not dados:
-				cs = ColetarSite(self.gerar_data(pagina))	
-				dados = cs.pegar_info()
-				
+				tentativas = 0
+				while not dados and tentativas < 10:
+					cs = ColetarSite(self.gerar_data(pagina))	
+					dados = cs.pegar_info()
+					tentativas += 1
+
 			if dados:
 				# insere os dados..
 				#total_dados += dados
