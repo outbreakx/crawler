@@ -1,5 +1,6 @@
-from gerenciar_coleta import *
+#from gerenciar_coleta import *
 from config import VERSAO
+from constantes import *
 print('versão: {}'.format(VERSAO))
 
 # usagem
@@ -12,6 +13,28 @@ print('versão: {}'.format(VERSAO))
 # qnt_vagas => quantas vagas de estacionamento a residencia tem
 # area_util_minima => é o espaço em metros mínimo da residência.
 # area_util_maxima => é o espaço ém metros máximo da residência
+
+
+
+import requests
+import urllib
+import json
+
+data = {
+	'tipoOferta': 'Imovel',
+	'paginaAtual': 1,
+	'pathName': '/venda/apartamentos/mg+belo-horizonte/',
+	'hashFragment': { "filtrodormitorios":"1;","pagina":"1"}
+}
+header = headers['padrao']
+req = requests.post(API['padrao'],headers=header,data=urllib.parse.urlencode(data))
+data = json.loads(req.text)
+
+with open('data.json', 'w') as outfile:
+    json.dump(data, outfile,indent=4)
+
+
+
 
 
 # variáveis de configuração !
@@ -34,3 +57,4 @@ pagina_final = -1 # vamos pegar 5 páginas
 gerenciar = GerenciarColeta(acao=acao, tipo=tipo,onde=onde,qnt_quartos=qnt_quartos,qnt_suites=qnt_suites,qnt_vagas=qnt_vagas,area_util_minima=area_util_minima,area_util_maxima=area_util_maxima)
 # iniciamos a coleta !
 gerenciar.rodar(pagina_inicial=pagina_inicial,pagina_final=pagina_final)
+
