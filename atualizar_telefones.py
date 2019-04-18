@@ -75,7 +75,6 @@ def pegar_num(id, transacao):
 
 	try:
 		req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data))
-		print('entrou aqui 1' + str(req.status_code))
 	except:
 		pass
 	if not req or req.status_code != 200:
@@ -85,18 +84,14 @@ def pegar_num(id, transacao):
 			print('entrou aqui 11:' + str(req.status_code))
 		except:
 			pass
-	print('entrou aqui 2')
 	if not req:
-		print(req.text)
 		return None
-	print('entrou aqui 3')
 	if req.status_code == 200:
 		res = json.loads(req.text)
 
 	if req.status_code != 200 or res['CaptchaId']:
 		tentativas = 0
 		while tentativas < 5:
-			print('entrou aqui 4')
 			header['user-agent'] = random.choice(user_agents)
 			proxy['http'] = pegar_proxies()
 			try:
@@ -110,7 +105,6 @@ def pegar_num(id, transacao):
 			else:
 				tentativas += 1
 				time.sleep(random.choice([2,4,6]))
-	print('entrou aqui final..')
 	return res
 
 
@@ -129,7 +123,6 @@ l = len(nao_coletados)
 
 update_progress(0, "Progresso:")
 for i, item in enumerate(nao_coletados):
-	print('{} => {}'.format(item['id'],item['transacao']))
 	try:
 		tmp = pegar_num(item['id'], item['transacao'])
 	except:
