@@ -74,22 +74,27 @@ def pegar_num(id, transacao):
 	proxy['http'] = pegar_proxies()
 
 	try:
+		print('entrou aqui 1')
 		req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
 	except:
 		pass
 	if not req or req.status_code != 200:
 		data['parametros']['TipoOferta'] = 'Imovel'
 		try:
+			print('entrou aqui 11')
 			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
 		except:
 			pass
+	print('entrou aqui 2')
 	if not req:
 		return None
+	print('entrou aqui 3')
 	res = json.loads(req.text)
 
 	if res['CaptchaId']:
 		tentativas = 0
 		while tentativas < 5:
+			print('entrou aqui 4')
 			header['user-agent'] = random.choice(user_agents)
 			proxy['http'] = pegar_proxies()
 			try:
@@ -103,6 +108,7 @@ def pegar_num(id, transacao):
 			else:
 				tentativas += 1
 				time.sleep(random.choice([2,4,6]))
+	print('entrou aqui final..')
 	return res
 
 
