@@ -10,7 +10,7 @@ from db import DB
 from constantes import *
 from MongoProxies import *
 from UserAgents import *
-
+from config import *
 
 db = DB()
 
@@ -45,7 +45,7 @@ user_agents = pegar_user_agents()
 
 
 
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = CASAS_DECIMAIS, length = 100, fill = '█'):
     """
     Call in a loop to create terminal progress bar
     @params:
@@ -84,6 +84,7 @@ def pegar_num(id, transacao):
 	}
 	proxy['http'] = pegar_proxies()
 
+	req = None
 	try:
 		req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
 	except:
@@ -94,8 +95,13 @@ def pegar_num(id, transacao):
 			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
 		except:
 			pass
+
 	if not req:
 		return None
+
+	if req.status_code == 404:
+		return None
+
 	res = json.loads(req.text)
 
 	if res['CaptchaId']:

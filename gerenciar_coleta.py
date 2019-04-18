@@ -4,10 +4,11 @@ import sys
 
 from constantes import *
 from coleta_site import ColetarSite
+from config import *
 from db import DB
 
 
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█'):
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = CASAS_DECIMAIS, length = 100, fill = '█'):
     """
     Call in a loop to create terminal progress bar
     @params:
