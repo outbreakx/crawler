@@ -61,7 +61,7 @@ def pegar_num(id, transacao):
 	data = {
 		'parametros': {
 			"ImovelID": id,
-			"TipoOferta": 'CampanhaImovel',			
+			"TipoOferta": 'Imovel',			
 			"Transacao": transacao
 		},
 		'__RequestVerificationToken': 'EYbyU3njELw8HXGwBrgvwFWb0yEnAXik9CTUowNx-yagjLTg04otZc4VSe4AWEJoCgeNrAxfLhW1KKfyw5kundOKmVk1'
@@ -79,7 +79,7 @@ def pegar_num(id, transacao):
 	except:
 		pass
 	if not req or req.status_code != 200:
-		data['parametros']['TipoOferta'] = 'Imovel'
+		data['parametros']['TipoOferta'] = 'Campanha'
 		try:
 			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data))
 			print('entrou aqui 11:' + str(req.status_code))
