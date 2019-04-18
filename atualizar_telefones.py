@@ -78,10 +78,9 @@ def pegar_num(id, transacao):
 	except:
 		pass
 	if not req or req.status_code != 200:
-		data['parametros']['TipoOferta'] = 'Campanha'
+		data['parametros']['TipoOferta'] = 'CampanhaImovel'
 		try:
 			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data))
-			print('entrou aqui 11:' + str(req.status_code))
 		except:
 			pass
 	if not req:
