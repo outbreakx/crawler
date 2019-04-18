@@ -59,7 +59,7 @@ def pegar_num(id, transacao):
 	data = {
 		'parametros': {
 			"ImovelID": id,
-			"TipoOferta": 'CampanhaImovel',			
+			"TipoOferta": 'Imovel',			
 			"Transacao": transacao
 		},
 		'__RequestVerificationToken': 'EYbyU3njELw8HXGwBrgvwFWb0yEnAXik9CTUowNx-yagjLTg04otZc4VSe4AWEJoCgeNrAxfLhW1KKfyw5kundOKmVk1'
@@ -77,21 +77,24 @@ def pegar_num(id, transacao):
 	except:
 		pass
 	if not req or req.status_code != 200:
-		data['parametros']['TipoOferta'] = 'Imovel'
+		data['parametros']['TipoOferta'] = 'CampanhaImovel'
 		try:
 			req = requests.post(API['telefone'],headers=header,data=urllib.parse.urlencode(data),proxies = proxy)
 		except:
 			pass
 
-	if not req:
-		return None
-
 	if req.status_code == 404:
 		return None
 
-	res = json.loads(req.text)
+	res = None
 
-	if res['CaptchaId']:
+	if req.status_code == 403 or req.status_code == 200:
+
+		if req.status_code == 200:
+			res = json.loads(req.text)
+			if not res['CaptchaId']:
+				return res
+
 		tentativas = 0
 		while tentativas < 5:
 			header['user-agent'] = random.choice(user_agents)
