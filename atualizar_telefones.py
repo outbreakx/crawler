@@ -10,7 +10,7 @@ from db import DB
 from constantes import *
 from MongoProxies import *
 from UserAgents import *
-
+from config import *
 
 db = DB()
 
