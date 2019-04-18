@@ -129,6 +129,7 @@ l = len(nao_coletados)
 
 update_progress(0, "Progresso:")
 for i, item in enumerate(nao_coletados):
+	print('{} => {}'.format(item['id'],item['transacao']))
 	try:
 		tmp = pegar_num(item['id'], item['transacao'])
 	except:
