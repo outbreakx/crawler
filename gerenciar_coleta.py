@@ -24,9 +24,6 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = CAS
     filledLength = int(length * iteration // total)
     bar = fill * filledLength + '-' * (length - filledLength)
     print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
-    # Print New Line on Complete
-    if iteration == total: 
-        print()
 
 ##
 ## @brief      função para gerar intervalos
@@ -66,7 +63,8 @@ class Test(threading.Thread):
 				total += 1
 				xd += len(dados)
 			else:
-				print('não coletou a página:' + str(pagina))
+				#print('não coletou a página:' + str(pagina))
+				pass
 			self.concluido += 1
 		#print('inseriu {} paginas com {} dados'.format(total,xd))
 		

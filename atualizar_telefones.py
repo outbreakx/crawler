@@ -61,9 +61,6 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = CAS
     filledLength = int(length * iteration // total)
     bar = fill * filledLength + '-' * (length - filledLength)
     print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
-    # Print New Line on Complete
-    if iteration == total: 
-        print()
 
 
 
