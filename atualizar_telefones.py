@@ -87,6 +87,7 @@ def pegar_num(id, transacao):
 			pass
 	print('entrou aqui 2')
 	if not req:
+		print(req.text)
 		return None
 	print('entrou aqui 3')
 	if req.status_code == 200:
