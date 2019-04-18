@@ -10,7 +10,7 @@ from db import DB
 from constantes import *
 from MongoProxies import *
 from UserAgents import *
-from config import *
+
 
 db = DB()
 
@@ -41,6 +41,7 @@ def pegar_user_agents():
 
 proxies = pegar_proxies()
 user_agents = pegar_user_agents()
+
 
 
 
@@ -120,7 +121,6 @@ l = len(nao_coletados)
 
 update_progress(0, "Progresso:")
 for i, item in enumerate(nao_coletados):
-	tmp = None
 	try:
 		tmp = pegar_num(item['id'], item['transacao'])
 	except:
@@ -133,5 +133,6 @@ for i, item in enumerate(nao_coletados):
 				if telefone['DDD']:
 					telefones.append(telefone['DDD'] + telefone['Numero'])
 			db.atualizar_telefone(item['id'], telefones)
-	update_progress((i + 1)/l, "Progresso:")
+	update_progress((i+1)/l, "Progresso:")
+
 	time.sleep(0.1)
