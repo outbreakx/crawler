@@ -44,24 +44,14 @@ user_agents = pegar_user_agents()
 
 
 
-
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = CASAS_DECIMAIS, length = 100, fill = '█'):
-    """
-    Call in a loop to create terminal progress bar
-    @params:
-        iteration   - Required  : current iteration (Int)
-        total       - Required  : total iterations (Int)
-        prefix      - Optional  : prefix string (Str)
-        suffix      - Optional  : suffix string (Str)
-        decimals    - Optional  : positive number of decimals in percent complete (Int)
-        length      - Optional  : character length of bar (Int)
-        fill        - Optional  : bar fill character (Str)
-    """
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
-
+def update_progress(progress,message):
+	length = 30
+	block = int(round(length*progress))
+	msg = "\r{0}: [{1}] {2}%".format(message, "#"*block + "-"*(length-block), round(progress*100, CASAS_DECIMAIS))
+	if progress >= 1: 
+		msg += " TERMINOU!\r\n"
+	sys.stdout.write(msg)
+	sys.stdout.flush()
 
 
 
@@ -133,7 +123,7 @@ for i, item in  enumerate(data):
 
 l = len(nao_coletados)
 
-printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+update_progress(0, "Progresso:")
 for i, item in enumerate(nao_coletados):
 	tmp = pegar_num(item['id'], item['transacao'])
 
@@ -144,5 +134,6 @@ for i, item in enumerate(nao_coletados):
 				if telefone['DDD']:
 					telefones.append(telefone['DDD'] + telefone['Numero'])
 			db.atualizar_telefone(item['id'], telefones)
-	printProgressBar(i + 1, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+
+	update_progress((i + 1)/l, "Progresso:")
 	time.sleep(1)

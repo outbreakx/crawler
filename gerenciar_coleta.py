@@ -8,22 +8,14 @@ from config import *
 from db import DB
 
 
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = CASAS_DECIMAIS, length = 100, fill = '█'):
-    """
-    Call in a loop to create terminal progress bar
-    @params:
-        iteration   - Required  : current iteration (Int)
-        total       - Required  : total iterations (Int)
-        prefix      - Optional  : prefix string (Str)
-        suffix      - Optional  : suffix string (Str)
-        decimals    - Optional  : positive number of decimals in percent complete (Int)
-        length      - Optional  : character length of bar (Int)
-        fill        - Optional  : bar fill character (Str)
-    """
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
+def update_progress(progress,message):
+	length = 30
+	block = int(round(length*progress))
+	msg = "\r{0}: [{1}] {2}%".format(message, "#"*block + "-"*(length-block), round(progress*100, CASAS_DECIMAIS))
+	if progress >= 1: 
+		msg += " TERMINOU!\r\n"
+	sys.stdout.write(msg)
+	sys.stdout.flush()
 
 ##
 ## @brief      função para gerar intervalos
@@ -373,11 +365,11 @@ class GerenciarColeta():
 		l = total_paginas
 
 		#print('total de threads:{}'.format(l))
-		printProgressBar(0, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+		update_progress(0, "Progresso:")
 
 		while True:
 			total_concluido = self.pegar_concluidos(threads)
-			printProgressBar(total_concluido, l, prefix = 'Progresso:', suffix = 'Completo', length = 50)
+			update_progress(total_concluido/l, "Progresso:")
 			if total_concluido == total_paginas:
 				break
 			time.sleep(1)

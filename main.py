@@ -36,4 +36,3 @@ pagina_final = -1
 gerenciar = GerenciarColeta(acao=acao, tipo=tipo,onde=onde,qnt_quartos=qnt_quartos,qnt_suites=qnt_suites,qnt_vagas=qnt_vagas,area_util_minima=area_util_minima,area_util_maxima=area_util_maxima)
 # iniciamos a coleta !
 gerenciar.rodar(pagina_inicial=pagina_inicial,pagina_final=pagina_final)
-
